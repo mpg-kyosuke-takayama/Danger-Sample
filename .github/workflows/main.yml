@@ -1,0 +1,21 @@
+name: Flutter CI/CD
+on:
+  pull_request:
+    types: [ opened, reopened, synchronize ]
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: set up repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - uses: kuhnroyal/flutter-fvm-config-action@v1
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+          cache: true
+      - run: flutter analyze > flutter_analyze_report.txt
+        continue-on-error: true
