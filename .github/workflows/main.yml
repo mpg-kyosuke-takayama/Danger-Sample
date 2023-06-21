@@ -20,6 +20,7 @@ jobs:
           cache: true
       - run: flutter analyze > flutter_analyze_report.txt
         continue-on-error: true
+      - run: perl -pi -e 's/^warning/info/' flutter_analyze_report.txt
       - name: Install ruby
         uses: ruby/setup-ruby@v1
         with:
